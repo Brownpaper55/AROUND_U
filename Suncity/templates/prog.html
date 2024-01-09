@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <link rel="stylesheet" href="{% static 'Suncity/main.css' %}">
+    <head>
+        <title>programs</title>
+    </head>
+<body>
+    <h1><span>PROGRAMS AVAILABLE!!!</span></h1>
+{% block content %}
+
+<ul>
+    {% for items in program %}
+    <li class="big">{{items|title}}</li>
+    <li class="one">Venue: {{items.Location|title}}</li>
+    <li class="one">Date: {{items.Date}}</li>
+    <li class="one">Time: {{items.start_time}}</li>
+    <li class="one">Attire: {{items.Dress_code}}</li>
+    <li class="one">About: {{items.Description}}</li> <br>  
+    {% if program.cover_photo %}
+      <img src="{{ program.cover_photo.url }}">
+      
+      {% endif %}
+    
+    
+    {% endfor %}
+    
+</ul>
+{% if user.is_authenticated %}
+<div class="aside"><a href="add_program">Add Programs</a></div> 
+{% endif %}
+
+{% endblock %}
+</body>
+</html>

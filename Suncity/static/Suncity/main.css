@@ -1,0 +1,38 @@
+body{
+    background-color: yellow;
+    color: black;
+    font-family: 'Times New Roman', Times, serif;
+}
+span{
+    font-size: large;
+    font-weight: bold;
+    font-style: oblique;
+}
+li.one{
+    font-size: large;
+    font-weight: bolder;
+    font-style: oblique;
+}
+div.search{
+
+    margin-right: 10px;
+    text-align: right;
+}
+div.aside{
+    margin-right: 10px;
+    text-align: right;
+}
+
+span.one{
+    font-size: large;
+    font-style: oblique;
+    color: darkblue;
+    font-weight: bold;
+
+}
+li.big{
+    font-size: xx-large;
+    font-style: oblique;
+    color: white;
+    font-weight: bolder;
+}

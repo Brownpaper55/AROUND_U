@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <link rel="stylesheet" href="{% static 'Suncity/main.css' %}">
+    <head><title>SIGN IN</title></head>
+    <body>
+        {% block content %}
+{% if form.errors and not form.non_field_errors %}
+<p >
+Please correct the error below.
+</p>
+{% endif %}
+        
+{% if form.non_field_errors %}
+{% for error in form.non_field_errors %}
+<p>
+    {{ error }}
+</p>
+{% endfor %}
+{% endif %}
+        <form method="post" >
+            {% csrf_token %}
+            <div >
+                {{ form.username.errors }}
+                {{ form.username.label_tag }} {{ form.username }}
+              </div>
+              <div class=>
+                {{ form.password.errors }}
+                {{ form.password.label_tag }} {{ form.password }}
+                <input type="hidden" name="next" value="{{ next }}">
+              </div>
+<p><input type="submit" value="log in"></p>
+<p>Dont have an Accounts? <a href="new_accounts/">Create an account</a></p>
+
+        </form>
+        {% endblock %}
+    </body>
+</html>
