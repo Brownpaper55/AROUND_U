@@ -16,15 +16,16 @@ class Signin_Form(forms.Form):
     Password = forms.CharField(required=True, widget=forms.PasswordInput)
 
 
-class Search_Form(forms.Form):
-    search = forms.CharField(min_length=2)
-    search_in = forms.ChoiceField(label= [Program.name, Program.Date])
 
 
 class Program_Form(forms.ModelForm):
     class Meta:
         model = Program
-        fields = ("__all__")
+        fields = ('name','Location','Date','Dress_code','Description','start_time','cover_photo')
+
+
+class Search_Form(forms.Form):
+    query = forms.CharField(max_length=250, label = 'search')
         
 
         

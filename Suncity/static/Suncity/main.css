@@ -1,5 +1,5 @@
 body{
-    background-color: yellow;
+    background-color: lightblue;
     color: black;
     font-family: 'Times New Roman', Times, serif;
 }
@@ -7,6 +7,10 @@ span{
     font-size: large;
     font-weight: bold;
     font-style: oblique;
+}
+ul{
+    border-bottom: solid;
+
 }
 li.one{
     font-size: large;
@@ -33,6 +37,6 @@ span.one{
 li.big{
     font-size: xx-large;
     font-style: oblique;
-    color: white;
+    color: black;
     font-weight: bolder;
 }

@@ -1,0 +1,16 @@
+render the images
+insert a search bar
+make a trend list on the homepage 
+allow authenticated users to add and edit only programs they have added
+better the css
+build apis
+build tests
+deploy this motherfucker
+Deadline = Friday night
+
+
+Theoffice123$
+kweku
+
+mike@222
+louis

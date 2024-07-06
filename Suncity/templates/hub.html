@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MY_HUB</title>
+</head>
+<body>
+    <P>Do you have any upcoming event? care to let Sunyani know?</P><div><a href="{% url 'create_program' %}">Add Programs</a></div> 
+    <ul>
+        {% for items in profile %}
+        
+        <li class="big">{{items|title}}</li>
+        <li class="one">Venue: {{items.Location|title}}</li>
+        <li class="one">Date: {{items.Date}}</li>
+        <li class="one">Time: {{items.start_time}}</li>
+        <li class="one">Attire: {{items.Dress_code}}</li>
+        <li class="one">About: {{items.Description}}</li> <br>  
+        <img src="{{ items.cover_photo.url }}"><br>
+        <a href="{% url 'edit_program' pk=items.id %}">update Program</a>
+        
+              
+        {% endfor %}
+      </ul>
+    
+</body>
+</html>

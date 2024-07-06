@@ -17,18 +17,16 @@
     <li class="one">Time: {{items.start_time}}</li>
     <li class="one">Attire: {{items.Dress_code}}</li>
     <li class="one">About: {{items.Description}}</li> <br>  
-    {% if program.cover_photo %}
-      <img src="{{ program.cover_photo.url }}">
-      
-      {% endif %}
-    
-    
+    <img src="{{ items.cover_photo.url }}"><br>
+          
     {% endfor %}
-    
 </ul>
-{% if user.is_authenticated %}
+    
+
+
+<!--{% if user.is_authenticated %}-->
 <div class="aside"><a href="add_program">Add Programs</a></div> 
-{% endif %}
+<!--{% endif %}-->
 
 {% endblock %}
 </body>

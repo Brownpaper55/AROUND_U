@@ -1,0 +1,38 @@
+<html>
+    {% load static %}
+    <head>
+        <link rel="stylesheet" href="{% static 'Suncity/main.css' %}" >
+        <title>EVENTS PUB</title>
+    </head>
+    <body>
+        <head>
+            <h1><span>SUNYANI</span> </h1><h2><span>WELCOME TO EVENTS PUB.COM</span></h2></head><br>
+            {% if user.is_authenticated %}
+            Hi<span class="one"> {{request.user.username}}</span><br>
+            {% endif %}
+            <img src="{% static 'Suncity/over.jpeg' %}" alt="Suncity" width="400" height="400">
+        </head>
+        <main>
+            <p><span>Check out  ongoing EVENTS in <a href="programs/">SUNYANI</a></span></p>
+            {% if user.is_authenticated %}
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+            {% else %}
+            <p>Create an <a href='new_accounts/'>account</a> account to tell us about your program or <a href="accounts/login">sign in</a></p>
+            {% endif %}
+        
+
+            <div>
+                <h4>Upcoming Programs</h4>
+                {% for items in upcoming %}
+                <li>{{items.name}}</li>
+                <li>{{items.Date}}</li>
+                {% endfor %}
+
+            </div>
+
+        </main>
+    </body>
+</html>

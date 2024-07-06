@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 import Suncity.views
+import Suncity.api_views
 
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls'),name='accounts'),
@@ -28,7 +29,11 @@ urlpatterns = [
     path('programs/', Suncity.views.programs, name= 'programs'),
     path('addprogram/<int:pk>/', Suncity.views.add_program, name='edit_program'),
     path('addprogram/', Suncity.views.add_program, name='create_program'),
-    path('entry_success', Suncity.views.FormSuccesView.as_view(), name= 'entry_success')
+    path('entry_success', Suncity.views.FormSuccesView.as_view(), name= 'entry_success'),
+    path('search/', Suncity.views.search, name='search'),
+    path('hub/',Suncity.views.hub, name = 'my_hub'),
+    path('apis/', Suncity.api_views.AllPrograms),
+    path('', include('api.urls'))
     #path('Create_Accounts/', Suncity.views.Create_Accounts)
 
 ]

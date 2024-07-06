@@ -9,16 +9,25 @@ from io import BytesIO
 from django.core.files.images import ImageFile 
 from django.views import View
 from django.views.generic.edit import FormView
+from django.utils import timezone
 
 
 # Create your views here.
 def index(request):
     username = CustomUser
-    return render(request,'indexe.html', {'username':username})
+    today = timezone.now().date()
+    upcoming = Program.objects.filter(Date=today).order_by('-start_time') | Program.objects.filter(Date__gt=today).order_by('Date')
+    return render(request,'indexe.html', {'username':username, 'upcoming':upcoming})
 
+@login_required
+def hub(request):
+    user = CustomUser.objects.get(id=request.user.id)
+    profile = Program.objects.filter(user = user)
+    return render(request,'hub.html', {'profile':profile})
 
 def logout_view(request):
     logout(request)
+    return redirect('login')
 
 
 class SignUpView(FormView):
@@ -45,7 +54,7 @@ class FormSuccesView(View):
      #   form = Signup_Form()
     #return render(request, 'signup.html', {'form':form})
 
-@login_required
+
 def programs(request):
     program = Program.objects.all
     Form = Search_Form
@@ -53,7 +62,7 @@ def programs(request):
 
 
 
-@login_required
+
 def add_program(request, pk=None):
     if pk is not None:
         program = get_object_or_404(Program, pk= pk)
@@ -63,14 +72,15 @@ def add_program(request, pk=None):
         form = Program_Form(request.POST, request.FILES, instance= program)
         if form.is_valid:
             program = form.save(False)
-            image_field = form.cleaned_data.get('cover_photo')
-            if image_field:
-                image = Image.open(image_field)
-                image.thumbnail = ((300, 300))
+            image_file = (form.cleaned_data['cover_photo'])
+            if image_file:
+                image = Image.open(image_file)
+                size = 300, 500
+                image.thumbnail(size, Image.Resampling.LANCZOS)
                 image_data = BytesIO()
-                image.save(fp=image_data, format= image_field.image.format)
-                image_file = ImageFile(image_data)
-                program.cover_photo.save(image_field.name, image_file)
+                image.save(fp=image_data, format= image.format)
+                image_field = ImageFile(image_data)
+                program.cover_photo.save(image_file.name, image_field)
                 program.save()
                 if program is None:
                     messages.success(request, "{}was updated".format(program))
@@ -83,6 +93,22 @@ def add_program(request, pk=None):
     return render(request, 'addprog.html', {'Form':form, 'instance':program , 'model_type':'Program', 'is_file_upload':True})
 
 
+
+def search(request):
+    if request.method == 'POST':
+        form = Search_Form(request.POST)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            search_results = Program.objects.filter(name__icontains=query)
+            return render(request, 'search_results.html', {'search_results': search_results, 'query':query,})
+    else:
+        form = Search_Form()
+    return render(request, 'search.html', {'Form':form})
+
 #def Create_Accounts(request):
+
+#class ProgramView(DetailView):
+ #   model = Program
+  #  template_name = 'prog.html'
    
     
