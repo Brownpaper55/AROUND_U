@@ -1,33 +1,32 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html>
-    <link rel="stylesheet" href="{% static 'Suncity/main.css' %}">
-    <head>
-        <title>programs</title>
-    </head>
-<body>
-    <h1><span>PROGRAMS AVAILABLE!!!</span></h1>
+
+
 {% block content %}
 
-<ul>
-    {% for items in program %}
-    <li class="big">{{items|title}}</li>
-    <li class="one">Venue: {{items.Location|title}}</li>
-    <li class="one">Date: {{items.Date}}</li>
-    <li class="one">Time: {{items.start_time}}</li>
-    <li class="one">Attire: {{items.Dress_code}}</li>
-    <li class="one">About: {{items.Description}}</li> <br>  
-    <img src="{{ items.cover_photo.url }}"><br>
+<div class="most-popular">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="heading-section">
+          <h4><em>Available Programs </em></h4>
+        </div>
+        {% for items in program %}
+        <div class="row">
+          <div class="col-lg-3 col-sm-6">
+            <div clas{s="item">
+              <img src={{ items.cover_photo.url }} alt="">
+              <ul>
+              <h4><li class="big">{{items|title}}</li><br>
+                <li class="one">Time: {{items.start_time}}</li><br>
+                 <br><br><span>Date: {{items.Date}}</span></h4>
+              <ul>
+                <li><i class="fa fa-star"></i> 4.8</li>
+                <li><i class="fa fa-download"></i> 2.3M</li>
+              </ul>
+              </ul>
+              {% endfor %}
+            </div>
+          </div>
           
-    {% endfor %}
-</ul>
-    
-
-
-<!--{% if user.is_authenticated %}-->
-<div class="aside"><a href="add_program">Add Programs</a></div> 
-<!--{% endif %}-->
-
 {% endblock %}
-</body>
-</html>
+          

@@ -1,8 +1,7 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
 <html>
-    <link rel="stylesheet" href="{% static 'Suncity/main.css' %}">
-    <head><title>SIGN IN</title></head>
+    
     <body>
         {% block content %}
 {% if form.errors and not form.non_field_errors %}

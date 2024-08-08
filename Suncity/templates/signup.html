@@ -1,8 +1,9 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+    
 {% load static %}
+{% block content %}
 <html>
-    <link rel="stylesheet" href="{% static 'Suncity/main.css' %}">
-    <head><title>CREATE ACCOUNT</title></head>
+    
     <body>
         <form method="post" action="">
             {% csrf_token %}
@@ -15,3 +16,4 @@
         </form>
     </body>
 </html>
+{% endblock %}

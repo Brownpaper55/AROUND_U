@@ -1,0 +1,43 @@
+{% load static %}
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href= "index.html" class="logo">
+                        <img src={% static "assets/images/sy.png" %} alt="" height="50" width="80">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Search End ***** -->
+                    <div class="search-input">
+                      <form method="post" id="search" action="{% url 'search' %}">
+                         {% csrf_token %}
+                         {{ Form.as_p }}
+        
+                        <input type="text" placeholder="Type Something" id='searchText' onkeypress="handle" />
+                        <i class="fa fa-search"></i>
+                      </form>
+                    </div>
+                    <!-- ***** Search End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                      <li><a href= {% url 'home' %} class="active">Home</a></li>
+                      <li><a href= {% url 'programs' %}>Programs</a></li>
+                      {% if user.is_authenticated %}
+                      <li><a href={% url 'logout' %}>Logout</a></li>
+                      {% else %}
+                      <li><a href= {% url 'login' %}>Login</a></li>
+                      <li><a href= {% url 'sign_up' %}>Register</a></li>
+                      {% endif %} 
+                        <li><a href= "profile.html">Profile <img src={% static "assets/images/profile-header.jpg" %} alt=""></a></li>
+                    </ul>   
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+  </header>
