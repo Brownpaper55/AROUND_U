@@ -30,7 +30,7 @@
                       <li><a href= {% url 'login' %}>Login</a></li>
                       <li><a href= {% url 'sign_up' %}>Register</a></li>
                       {% endif %} 
-                        <li><a href= "profile.html">Profile <img src={% static "assets/images/profile-header.jpg" %} alt=""></a></li>
+                        <li><a href= {% url 'my_hub' %}>Profile <img src={% static "assets/images/profile-header.jpg" %} alt=""></a></li>
                     </ul>   
                     <a class='menu-trigger'>
                         <span>Menu</span>

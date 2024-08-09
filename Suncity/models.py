@@ -18,7 +18,7 @@ class Program(models.Model):
     Description=models.CharField(max_length=250, default= None)
     start_time= models.TimeField(default = None)
     cover_photo= models.ImageField(null=True, blank=True, upload_to='images/')
-    user = models.ForeignKey(CustomUser, on_delete = models.CASCADE, default = None)
+    user = models.ForeignKey(CustomUser, on_delete = models.CASCADE)
    
     
 
