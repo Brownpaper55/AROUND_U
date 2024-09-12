@@ -8,7 +8,7 @@ from PIL import Image
 from io import BytesIO
 from django.core.files.images import ImageFile 
 from django.views import View
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, DeleteView
 from django.utils import timezone
 
 
@@ -104,6 +104,15 @@ def search(request):
     else:
         form = Search_Form()
     return render(request, 'search.html', {'Form':form})
+
+
+
+class ProgView(DeleteView):
+    model = Program
+    success_url = "my_hub"
+    template_name = "delete_view.html"
+    
+    
 
 #def Create_Accounts(request):
 

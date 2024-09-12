@@ -32,6 +32,7 @@ urlpatterns = [
     path('entry_success', Suncity.views.FormSuccesView.as_view(), name= 'entry_success'),
     path('search/', Suncity.views.search, name='search'),
     path('hub/',Suncity.views.hub, name = 'my_hub'),
+    path('delete/<pk>/', Suncity.views.ProgView.as_view(), name='delete_prog'),
     path('apis/', Suncity.api_views.AllPrograms),
     path('', include('api.urls'))
     #path('Create_Accounts/', Suncity.views.Create_Accounts)

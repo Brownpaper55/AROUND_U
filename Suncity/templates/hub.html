@@ -2,26 +2,32 @@
 {% load static %}
 {% block content %}
 <body>
-    <div class="most-popular">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="heading-section">
-              <em> hey </em>{{user.name}} Do you have any upcoming events? <a href="{% url 'create_program' %}">Add Programs</a> 
-            </div>
+    
     <ul>
         {% for items in profile %}
+        <div class="gaming-library">
+          <div class="col-lg-12">
+            <div class="heading-section">
+              <h4><em>{{items.user}}'s</em> Library</h4>
+            </div>
+            <div class="item">
+              <ul>
+                <li><img src={{ items.cover_photo.url }} alt="" class="templatemo-item"></li>
+                <li><h4>{{items.name}}</h4><span>Program</span></li>
+                <li><h4>{{items.Date}}</h4><span>Date</span></li>
+                <li><h4>{{items.start_time}}</h4><span>Time</span></li>
+                <!--<li><h4>{{items.Dress_code}}</h4><span>Attire</span></li>-->
+                <li><div class="main-border-button border-no-active"><a href="{% url 'edit_program' pk=items.id %}">update</a></div></li>
+                <li><div class="main-border-button border-no-active"><a href="{% url 'delete_prog' pk=items.id %}">delete</a></div></li><br/>
+                
+              </ul>
+            </div>
         
-        <li class="big">{{items|title}}</li>
-        <li class="one">Venue: {{items.Location|title}}</li>
-        <li class="one">Date: {{items.Date}}</li>
-        <li class="one">Time: {{items.start_time}}</li>
-        <li class="one">Attire: {{items.Dress_code}}</li>
-        <li class="one">About: {{items.Description}}</li> <br>  
-        <img src="{{ items.cover_photo.url }}"><br>
-        <a href="{% url 'edit_program' pk=items.id %}">update Program</a>
-        
+       
               
         {% endfor %}
+        <li><div class="main-border-button border-no-active"><a href="{% url 'create_program' %}">Add Programs</a></div></li><br/>
+               
       </ul>
      
 </body>
