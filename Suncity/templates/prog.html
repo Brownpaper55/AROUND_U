@@ -17,6 +17,7 @@
             <div class="item">
               <img src={{ items.cover_photo.url }} alt="">
               <h4>{{items|title}}<br><span>Date: {{items.Date}}</span></h4>
+              <p><a href={% url 'view_program' items.id %}>view Program</a></p>
         
               
               </ul>

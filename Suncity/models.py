@@ -19,7 +19,7 @@ class Program(models.Model):
     start_time= models.TimeField(default = None)
     cover_photo= models.ImageField(null=True, blank=True, upload_to='images/')
     user = models.ForeignKey(CustomUser, on_delete = models.CASCADE)
-   
+    views = models.IntegerField(default=0)
     
 
     def __str__(self):

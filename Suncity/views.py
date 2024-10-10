@@ -16,8 +16,15 @@ from django.utils import timezone
 def index(request):
     username = CustomUser
     today = timezone.now().date()
+
+    #display programs in order of nearest date
     upcoming = Program.objects.filter(Date=today).order_by('-start_time') | Program.objects.filter(Date__gt=today).order_by('Date')
-    return render(request,'indexe.html', {'username':username, 'upcoming':upcoming})
+
+    #display most viewed program
+    viewed_program_ids = request.session.get('viewed_programs', [])
+    most_viewed_program = Program.objects.filter(id__in=viewed_program_ids).order_by('-views')[:5]
+
+    return render(request,'indexe.html', {'username':username, 'upcoming':upcoming, 'most_viewed_program':most_viewed_program})
 
 @login_required
 def hub(request):
@@ -61,6 +68,26 @@ def programs(request):
     return render(request,'prog.html', {'program':program,'form':Form})
 
 
+def view_program(request, pk=None):
+    program = Program.objects.get(id=pk)
+    
+    #Increment the view count
+    program.views += 1
+    program.save()
+
+    #Get the most viewed programs from session
+    viewed_programs = request.session.get("viewed_programs", [])
+
+    #If this program isnt already in the session, add it
+    if pk not in viewed_programs:
+        viewed_programs.append(pk)
+
+    #Update the session data
+    request.session['viewed_programs'] = viewed_programs
+    
+    return render(request, 'view_program.html', {'program':program}) 
+
+
 
 
 def add_program(request, pk=None):
@@ -72,6 +99,7 @@ def add_program(request, pk=None):
         form = Program_Form(request.POST, request.FILES, instance= program)
         if form.is_valid:
             program = form.save(False)
+            program.user = request.user
             image_file = (form.cleaned_data['cover_photo'])
             if image_file:
                 image = Image.open(image_file)

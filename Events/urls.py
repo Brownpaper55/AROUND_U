@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Suncity.views.index, name='home'),
     path('programs/', Suncity.views.programs, name= 'programs'),
+    path('viewprogram/<int:pk>/', Suncity.views.view_program, name='view_program'),
     path('addprogram/<int:pk>/', Suncity.views.add_program, name='edit_program'),
     path('addprogram/', Suncity.views.add_program, name='create_program'),
     path('entry_success', Suncity.views.FormSuccesView.as_view(), name= 'entry_success'),

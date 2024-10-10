@@ -29,7 +29,7 @@ Please correct the error below.
                 <input type="hidden" name="next" value="{{ next }}">
               </div>
 <p><input type="submit" value="log in"></p>
-<p>Dont have an Accounts? <a href="new_accounts/">Create an account</a></p>
+<p>Dont have an Accounts? <a href="{% url 'sign_up' %}">Create an account</a></p>
 
         </form>
         {% endblock %}

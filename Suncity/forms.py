@@ -21,7 +21,7 @@ class Signin_Form(forms.Form):
 class Program_Form(forms.ModelForm):
     class Meta:
         model = Program
-        fields = ('name','Location','Date','Dress_code','Description','start_time','cover_photo','user')
+        fields = ('name','Location','Date','Dress_code','Description','start_time','cover_photo')
 
 
 class Search_Form(forms.Form):

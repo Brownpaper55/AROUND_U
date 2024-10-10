@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <ul>
+      <li><img src={{program.cover_photo.url}} alt="" class="templatemo-item"></li>
+      <li><em>Title</em><h6>{{program.name}}</h6></li>
+      <li>Date<span><h6>{{program.Date}} - {{program.start_time}}</h6></span></li>
+      <li>Location<span><h6>{{program.Location}}</h6></span></li>
+      <li>About<span><h6>{{program.Description}}</h6></span></li>
+      <li>Attire<span><h6>{{program.Dress_code}}</h6></span></li>
+      
+    </ul>
+  </div>
+  
+
+    
+
+ 
+  {% endblock %}
