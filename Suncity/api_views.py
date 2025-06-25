@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
 from django.db.models import F
 from .models import Program, CustomUser
+from datetime import date
 from .serializers import (
     ProgramSerializer, 
     ProgramListSerializer, 
@@ -80,7 +81,7 @@ def profile(request):
     serializer = CustomUserSerializer(request.user)
     return Response(serializer.data, status= status.HTTP_200_OK)
 
-
+#update current user profile
 @api_view(['PUT', 'PATCH'])
 @permission_classes([IsAuthenticated])
 def update_profile(request):
@@ -117,6 +118,7 @@ def program_list(request):
         'programs': serializer.data
     }, status = status.HTTP_200_OK)
 
+#Get detailed view of a particular program
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def program_detail(request, pk):
@@ -129,8 +131,95 @@ def program_detail(request, pk):
     serializer = ProgramDetailSerializer(program)
     return Response(serializer.data, status = status.HTTP_200_OK)
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def program_create(request):
+    """Create a new program"""
+    serializer = ProgramSerializer(request.data, context = {'request':request})
+    if serializer.is_valid():
+        program = serializer.save(user = request.user)
+        return Response(
+            ProgramDetailSerializer(program).data,
+            status = status.HTTP_200_CREATED
+        )
+
+@api_view(['PUT','PATCH'])
+@permission_classes([IsAuthenticated])
+def program_update(request, pk):
+    """update  program"""
+    program = get_object_or_404(Program, pk= pk)
+    #check if user owns the program
+    if program.user != request.user:
+        return Response(
+            {
+                'error':'You can only update your own programs'
+            }, status = status.HTTP_403_FORBIDDEN
+        )
+    serializer = ProgramSerializer(program, data = request.data,partial = request.method == 'PATCH', context = {'request':request})
+    if serializer.is_valid():
+        serializer.save()
+        return Response(
+            serializer.data, status = status.HTTP_200_OK
+        )
+    return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def program_delete(request,pk):
+    """Delete program by owner"""
+    program = get_object_or_404(Program, pk=pk)
+    #check if user owns the program
+    if request.user != program.user:
+        return Response({
+            'error':'You can only delete your own programs'
+        }, status = status.HTTP_403_FORBIDDEN)
+    program.delete()
+    return Response(
+        {'message':'Program deleted successfully'}, status= status.HTTP_204_NO_CONTENT
+    )
 
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def my_programs(request):
+    """Get all programs created by current user"""
+    programs = Program.objects.filter(user = request.user).order_by('-Date')
+    serializers = ProgramSerializer(programs, many=True)
+    return Response({
+        'count':programs.count,
+        'programs': serializers.data
+    }, status = status.HTTP_200_OK)
 
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def user_programs(request, user_id):
+    """Get all programs created by a specific user"""
+    user = get_object_or_404(CustomUser, pk = user_id)
+    programs = Program.objects.filter(user = user).order_by('-Date')
+    serializers = ProgramSerializer(programs, many=True)
+    return Response({
+        'count':programs.count,
+        'programs': serializers.data
+    }, status = status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def popular_programs(request):
+    """Popular programs"""
+    programs = Program.objects.all().order_by('-views')[:10]#Top 10 most viewed
+    serializer = ProgramSerializer(programs, many=True)
+    return Response({
+        'Programs':serializer.data
+    }, status = status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def upcoming_programs(request):
+    programs = Program.objects.filter(Date__gte = date.today()).order_by('Date')
+    serializer = ProgramSerializer(programs, many=True)
+    return Response({
+        'count':programs.count(),
+        'program':serializer.data
+    }, status =status.HTTP_200_OK)

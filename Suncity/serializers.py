@@ -37,7 +37,7 @@ class ProgramSerializer(serializers.ModelSerializer):
     user = CustomUserSerializer(read_only = True)
     class Meta:
         model = Program
-        fields = ['name','Location','Date','Dress_code','Venue','Description','start_time','cover_photo','user']
+        fields = ['name','Location','Date','Dress_code','Description','start_time','cover_photo','user']
 
     def validate_Date(self, value):
         if value < date.today():

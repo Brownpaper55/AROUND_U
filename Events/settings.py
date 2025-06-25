@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Suncity',
     'rest_framework',
-    'api'
+    
 ]
 
 MIDDLEWARE = [
